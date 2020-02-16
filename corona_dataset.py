@@ -49,3 +49,23 @@ ax2.legend(loc =1)
 
 # Showing the Table
 Break.sort_values(["Suspected","Recovered"])
+
+
+
+# Showing the Cleaned Break
+Cleaned_Break = Break[(Break["Suspected"] != 0) & (Break["Recovered"] != 0)]
+
+fig = plt.figure()
+ax3 = fig.add_subplot(1,1,1)
+xlabel = Cleaned_Break["Province/State"]
+ax3.plot(xlabel, Cleaned_Break["Suspected"], "r-", label = "Suspected")
+ax3.legend(loc = 0)
+ax3.set_xlabel('Province / State')
+ax3.set_xticklabels(xlabel, rotation = 90)
+ax3.set_ylabel('Number of Suspected')
+ax3.set_title("Province / State vs Number of Suspected")
+ax3.grid(True)
+ax4 = ax3.twinx()
+ax4.plot(xlabel, Cleaned_Break["Recovered"], "b-", label = "Recovered")
+ax4.set_ylabel('Number of Recovered')
+ax4.legend(loc =1)
