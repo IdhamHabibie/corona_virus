@@ -69,3 +69,34 @@ ax4 = ax3.twinx()
 ax4.plot(xlabel, Cleaned_Break["Recovered"], "b-", label = "Recovered")
 ax4.set_ylabel('Number of Recovered')
 ax4.legend(loc =1)
+
+
+# Showing the Past Time of the Values
+Plots = Sorting[(Sorting["Province/State"] == "Beijing") | (Sorting["Province/State"] == "Guangdong") | (Sorting["Province/State"] == "Hubei") | (Sorting["Province/State"] == "Shanghai") | (Sorting["Province/State"] == "Zheijang")]
+Plots["Final_Data"] = Plots["Date last updated"].fillna(Plots["Last Update"])
+
+# Visualization 
+def visualization(inputing, name, bar, line):
+    # Variables
+    variable = inputing[inputing["Province/State"] == name].sort_values(by = "Final_Data")
+    fig = plt.figure()
+    ax1 = fig.add_subplot(1,1,1)
+    xlabel = variable["Final_Data"]
+    ax1.bar(xlabel, variable[bar], label = bar)
+    ax1.legend(loc = 6 ,bbox_to_anchor = (0, 0, 0.2, 0.5))
+    ax1.set_xlabel('Province / State')
+    ax1.set_xticklabels(xlabel, rotation = 90)
+    ax1.set_ylabel('Number of Suspected')
+    ax1.set_title(bar + " vs " + line)
+    ax1.grid(True)
+    ax2 = ax1.twinx()
+    ax2.plot(xlabel, variable[line], "b-", label = line)
+    ax2.set_ylabel('Number of Recovered')
+    ax2.legend(loc =6, bbox_to_anchor = (0, 0, 0.2, 0.2))
+    plt.show()
+
+# Visualization of each city
+visualization(Plots, "Beijing", "Confirmed", "Recovered")
+visualization(Plots, "Guangdong", "Confirmed", "Recovered")
+visualization(Plots, "Hubei", "Confirmed", "Recovered")
+visualization(Plots, "Shanghai", "Confirmed", "Recovered")
